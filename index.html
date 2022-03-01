@@ -1,0 +1,56 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+  <div class="w-75 mx-auto py-3">
+    <label for="productName">productName :</label>
+    <input type="text" class="form-control my-2" id="productName">
+
+    <label for="productPrice">productPrice :</label>
+    <input type="number" class="form-control my-2" id="productPrice">
+
+    <label for="productCount">productCount :</label>
+    <input type="number" class="form-control my-2" id="productCount">
+
+    <label for="productCategory">productCategory :</label>
+    <input type="text" class="form-control my-2" id="productCategory">
+
+    <label for="productDesc">productDesc :</label>
+    <textarea type="text" class="form-control my-2" id="productDesc"></textarea>
+
+    <button id="addUpdateProduct" onclick="check()" class="btn btn-primary">add product</button>
+  </div>
+
+  
+  <div id="tableShow" class="w-75 mx-auto py-3">
+    <input onkeyup="searchProduct(this.value)" id="searchInput" type="text" class="form-control w-75 mx-auto mb-3" placeholder="search..." >
+    <table class="table text-center">
+      <thead>
+        <th>Index</th>
+        <th>ProductName</th>
+        <th>ProductPrice</th>
+        <th>ProductCount</th>
+        <th>increase</th>
+        <th>decrease</th>
+        <th>ProductCategory</th>
+        <th>ProductDesc</th>
+        <th>update</th>
+        <th>delete</th>
+      </thead>
+      <tbody id="tableRow">
+      </tbody>
+    </table>
+  </div>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>
