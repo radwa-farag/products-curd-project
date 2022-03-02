@@ -1,23 +1,37 @@
-var productNameInput = document.getElementById('productName');
-var productPriceInput = document.getElementById('productPrice');
-var productCountInput = document.getElementById('productCount');
-var productCategoryInput = document.getElementById('productCategory');
-var productDescInput = document.getElementById('productDesc');
-var searchInput = document.getElementById('searchInput');
-var productsContainer;
+let productNameInput = document.getElementById('productName');
+let productPriceInput = document.getElementById('productPrice');
+let productCountInput = document.getElementById('productCount');
+let productCategoryInput = document.getElementById('productCategory');
+let productImageInput = document.getElementById('productImage');
+let productDescInput = document.getElementById('productDesc');
+let searchInput = document.getElementById('searchInput');
+
+let productsContainer;
 if (localStorage.getItem("products") == null)
     productsContainer = [];
 else {
     productsContainer = JSON.parse(localStorage.getItem("products"));
     displayProducts(productsContainer);
 }
+
+let uploadedImage = '';
+
+productImageInput.addEventListener('change', function () {
+    let reader = new FileReader();
+    reader.addEventListener('load', () => {
+        uploadedImage = reader.result;
+    });
+    reader.readAsDataURL(this.files[0]);
+});
+
 function addProduct() {
     if (validate()) {
-        var product = {
+        let product = {
             name: productNameInput.value,
             price: productPriceInput.value,
             count: productCountInput.value,
             category: productCategoryInput.value,
+            image: uploadedImage,
             desc: productDescInput.value
         }
         productsContainer.push(product);
@@ -36,14 +50,16 @@ function clearForm() {
     productCountInput.value = "";
     productCategoryInput.value = "";
     productDescInput.value = "";
+    productImageInput.value = "";
 }
 
 function displayProducts(productsArr) {
     showTable();
-    var cartoona = "";
-    for (var i = 0; i < productsArr.length; i++) {
+    let cartoona = "";
+    for (let i = 0; i < productsArr.length; i++) {
         cartoona += `<tr>
         <td>${i + 1}</td>   
+        <td><img src="${productsArr[i].image}" alt=""></td>
         <td>${productsArr[i].name}</td>
         <td>${productsArr[i].price}</td>
         <td>${productsArr[i].count}</td>
@@ -63,23 +79,25 @@ function deleteProduct(productIndex) {
     displayProducts(productsContainer);
 }
 
-var updateProductIndex = 0;
+let updateProductIndex = 0;
 function updateProduct(productIndex) {
     document.getElementById("addUpdateProduct").innerHTML = "updte product";
     productNameInput.value = productsContainer[productIndex].name;
     productPriceInput.value = productsContainer[productIndex].price;
     productCountInput.value = productsContainer[productIndex].count;
     productCategoryInput.value = productsContainer[productIndex].category;
+    //productImageInput.value = productsContainer[productIndex].image;
     productDescInput.value = productsContainer[productIndex].desc;
     updateProductIndex = productIndex;
 }
 
 function showProductAfterUpdate(productIndex) {
-    var product = {
+    let product = {
         name: productNameInput.value,
         price: productPriceInput.value,
         count: productCountInput.value,
         category: productCategoryInput.value,
+        image: uploadedImage,
         desc: productDescInput.value
     }
     productsContainer[productIndex] = product;
@@ -106,8 +124,8 @@ function showTable() {
 }
 
 function searchProduct(value) {
-    var searchProducts = [];
-    for (var i = 0; i < productsContainer.length; i++) {
+    let searchProducts = [];
+    for (let i = 0; i < productsContainer.length; i++) {
         if (productsContainer[i].name.toLowerCase().includes(value.toLowerCase())) {
             searchProducts.push(productsContainer[i]);
         }
@@ -116,7 +134,7 @@ function searchProduct(value) {
 }
 
 function validate() {
-    var regex = /^[A-Z][a-z]{3,20}$/;
+    let regex = /^[A-Z][a-z]{3,20}$/;
     if (regex.test(productNameInput.value))
         return true;
     else
