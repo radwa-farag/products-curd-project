@@ -92,19 +92,24 @@ function updateProduct(productIndex) {
 }
 
 function showProductAfterUpdate(productIndex) {
-    let product = {
-        name: productNameInput.value,
-        price: productPriceInput.value,
-        count: productCountInput.value,
-        category: productCategoryInput.value,
-        image: uploadedImage,
-        desc: productDescInput.value
+    if (validate()) {
+        let product = {
+            name: productNameInput.value,
+            price: productPriceInput.value,
+            count: productCountInput.value,
+            category: productCategoryInput.value,
+            image: uploadedImage,
+            desc: productDescInput.value
+        }
+        productsContainer[productIndex] = product;
+        localStorage.setItem("products", JSON.stringify(productsContainer));
+        displayProducts(productsContainer);
+        clearForm();
+        document.getElementById("addUpdateProduct").innerHTML = "add product";
+        productNameInput.style.borderColor = "green";
     }
-    productsContainer[productIndex] = product;
-    localStorage.setItem("products", JSON.stringify(productsContainer));
-    displayProducts(productsContainer);
-    clearForm();
-    document.getElementById("addUpdateProduct").innerHTML = "add product";
+    else
+        productNameInput.style.borderColor = "red";
 }
 
 function check() {
